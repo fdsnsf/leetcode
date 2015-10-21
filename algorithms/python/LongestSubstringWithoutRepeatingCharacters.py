@@ -11,6 +11,7 @@ class Solution(object):
 			#pos = s.find(s[i], slow)
 			pos = self.finds(s[i], s, slow, i)
 			if pos < i:
+				#max_len = max_len if max_len>now_len else now_len
 				max_len = max(max_len, now_len)
 				slow = pos+1
 				now_len = i-slow
