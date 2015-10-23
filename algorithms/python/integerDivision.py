@@ -14,20 +14,20 @@ class Solution(object):
 	  以此类推直至计算出整数N的组合数。
 	"""
 	# num = 506  n_m = 31
-	def integerDivision(self,  num, n_m):
+	def integerDivision(self, num):
 		if num < 3:
 			return 0
-		max_n = 506#num
-		max_m = 31#n_m
-		max_s = 252#self.countS(max_n, 2)
-		count = [[[0]*(max_s+1)]*(max_m+1)]*(max_n+1)
+		max_n = num
+		max_m = self.maxM(num)
+		max_s = self.countS(max_n, 2)
+		count = [([([0]*(max_s+1)) for i in range(max_m+1)])for j in range(max_n+1)]
 
 		#N最小为3，组合数为1
 		for n in range(3, max_n+1):
 			#计算整数N（3~NUM）划分为2（M=2）个整数之和的组合数
-			if n%2 == 0:    #N为偶数
+			if n%2:    #N为奇数
 				count[n][2][0] = n/2
-			else:    #N为奇数
+			else:    #N为偶数
 				count[n][2][0] = n/2-1
 			for  i in range(1, count[n][2][0]+1):
 				count[n][2][i] = 1    #2个数的组合数，且一个数已经确定，则组合数只能为1
@@ -45,7 +45,7 @@ class Solution(object):
 					count[n][m][0] += count[n][m][i]    #M个数的组合数
 
 		#M个数的组合数
-		for j in range(2, max_m+1):
+		for j in range(2, max_m):
 			count[max_n][max_m][0] += count[max_n][j][0]
 
 		return count[max_n][max_m][0]    #输出总的组合数
@@ -60,9 +60,17 @@ class Solution(object):
 		else:
 			s = (n-m/2)/m - (m/2-1)
 		return s
+
+	def maxM(self, n):
+		m = 2
+		while n > m*(m+1)/2:
+			m = m+1
+
+		return m if n==m*(m+1)/2 else m-1
 			
 
 s = Solution()
-print s.integerDivision(int(sys.argv[1]), int(sys.argv[2]))
+#print s.maxM(int(sys.argv[1]))
+print s.integerDivision(int(sys.argv[1]))
 
 		
