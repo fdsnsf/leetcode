@@ -4,27 +4,16 @@ import sys
 def isPalindrome(x):
 	if x < 0:
 		return False
+	i = 1
+	while i  <= x/10:
+		i *= 10
 
-	length = 0
-	i = x
-	while i > 0:
-		i /= 10
-		length += 1
-	print 'length:', length
-
-	s = length - 1
-	for k in range(length/2):
-		high = x/(10**s)
-		low = x % 10
-		print 's,high,low', s, high, low
-		print x
-		if high== low:
-			x = x- high*10**s
-			x /= 10
-			s -= 2
-			print x
+	while i >= 1:
+		if x%10 == x/i:
+			x = (x-x/i*i)/10
 		else:
 			return False
+		i /= 100
 	return True
 
 if __name__ == '__main__':
