@@ -1,28 +1,34 @@
 #coding = utf-8
 
+import bisect
 def threeSumClosest(nums, target):
 	nums.sort()
-	nMap = {}
-	for i in nums:
-		if i in nMap:
-			nMap[i] += 1
-		else :
-			nMap[i] = 1
+	summ = sum(nums[-3:])
+	if target >= summ:
+		return summ
 	length = len(nums)
-	result =  nums[0]+nums[1]+nums[2]
+	result =  sum(nums[:3])
+	if result >= target:
+		return result
 	ta = abs(result-target)
 	if ta == 0:
 		return result
-	for i in range(length):
-		for j in range(i+1, length):
+	for i in range(length-2):
+		left = bisect.bisect_left(nums, target - nums[i] - nums[-1], lo = i + 1) #binary search
+		if left > i + 1: left -= 1
+		for j in range(left, length-1):
 			n3 = target - nums[i] - nums[j]
-			if n3 in nMap and (nums[j]<n3 or (nums[j] == n3 and nMap[n3]>1)):
-				print nums[i], nums[j], n3
-				return target
-			for k in range(n3,n3+ta):
-				if k in nMap and (nums[j]<k or (nums[j] == k and nMap[k]>1)):
-					ta = k-ta
-					result = nums[i] + nums[j] + k 
+			ind =  bisect.bisect_left(nums , n3, j+1)
+			values = [ind-1, ind]
+			for val in values:
+				if val > j and val < length:
+					summ = nums[i] + nums[j] + nums[val]
+					if summ == target:
+						return target
+					if abs(summ - target) < ta:
+						result = summ
+						ta = abs(summ - target)
+			if nums[i] + nums[j] + nums[j+1] > target: break
 				
 					
 	return result
