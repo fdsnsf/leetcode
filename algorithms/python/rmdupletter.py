@@ -6,9 +6,13 @@ import string
 def rmNeiDupL(s):
 	length = len(s)
 	strlist = list(s)
-	for i in range(length):
+	i = 0
+	while i < length:
 		if i+1 != length and s[i]==s[i+1]:
 			del strlist[i]
+			length -= 1
+			
+		i += 1
 	s = ''.join(strlist)
 	#print s
 	return s
@@ -40,6 +44,7 @@ def removeDupLettersv2(s):
 		if len(okeys)>0 and nowStr == okeys[0]:
 			result += nowStr
 			del okeys[0]
+			del keys[pot]
 		elif numsDic[nowStr] == 1:
 			result += nowStr
 			del keys[pot]
@@ -177,6 +182,9 @@ if __name__ == '__main__':
 		numslist.append('cbacdcbc')
 		numslist.append('ccacbaba')
 		numslist.append('bccab')
+		numslist.append("cbbbcaa")
+		numslist.append("ccacbaba")
+		numslist.append('cbcab')
 
 		for i in numslist:
 			print i, removeDupLettersv2(i)
