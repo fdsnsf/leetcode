@@ -3,6 +3,66 @@ import sys
 import collections
 import string
 
+def rmNeiDupL(s):
+	length = len(s)
+	strlist = list(s)
+	for i in range(length):
+		if i+1 != length and s[i]==s[i+1]:
+			del strlist[i]
+	s = ''.join(strlist)
+	#print s
+	return s
+
+
+def removeDupLettersv2(s):
+	s = rmNeiDupL(s)
+	numsDic = collections.Counter(s)
+
+	keys = numsDic.keys()
+	keys.sort()
+
+	okeys = []
+	for i in s:
+		if numsDic[i] == 1:
+			okeys.append(i)
+
+	result = ''
+	length = len(s)
+
+	for i in range(length):
+
+		nowStr = s[i]
+		if nowStr not in keys:
+			continue
+
+		pot = keys.index(nowStr)
+
+		if len(okeys)>0 and nowStr == okeys[0]:
+			result += nowStr
+			del okeys[0]
+		elif numsDic[nowStr] == 1:
+			result += nowStr
+			del keys[pot]
+		elif nowStr == keys[0]:
+			result += nowStr
+			del keys[0]
+		elif len(okeys)>0 and nowStr<okeys[0]:
+			j = i + 1
+			while s[j] != okeys[0]:
+				if s[j] < nowStr:
+					numsDic[nowStr] -= 1
+					break
+				j += 1
+			else:
+				result += nowStr
+				del keys[pot]
+		else:
+			numsDic[nowStr] -= 1
+				
+
+	return result
+
+
 
 def removeDupLetters(s):
 	length = len(s)
@@ -109,7 +169,7 @@ def removeDuplicateLetters(s):
 if __name__ == '__main__':
 
 	if len(sys.argv)  > 1:
-		print removeDupLetters(sys.argv[1])
+		print removeDupLettersv2(sys.argv[1])
 	else:
 		numslist = []
 		numslist.append('thesqtitxyetpxloeevdeqifkz')
@@ -119,7 +179,7 @@ if __name__ == '__main__':
 		numslist.append('bccab')
 
 		for i in numslist:
-			print i, removeDupLetters(i)
+			print i, removeDupLettersv2(i)
 
 
 
