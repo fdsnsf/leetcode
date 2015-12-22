@@ -17,6 +17,14 @@ def rmNeiDupL(s):
 	#print s
 	return s
 
+def addokeys(okeys, okeysdic, pot, nowStr):
+	for i in range(len(okeys)):
+		if okeysdic[okeys[i]] > pot:
+			okeys.insert(i, nowStr)
+			okeysdic[nowStr] = pot
+			break
+	return okeys,okeysdic
+
 
 def removeDupLettersv2(s):
 	s = rmNeiDupL(s)
@@ -26,12 +34,15 @@ def removeDupLettersv2(s):
 	keys.sort()
 
 	okeys = []
-	for i in s:
-		if numsDic[i] == 1:
-			okeys.append(i)
+	length = len(s)
+	okeysdic = {}
+	for i in range(length):
+		if numsDic[s[i]] == 1:
+			okeys.append(s[i])
+			okeysdic[s[i]] = i
 
 	result = ''
-	length = len(s)
+	
 
 	for i in range(length):
 
@@ -56,6 +67,8 @@ def removeDupLettersv2(s):
 			while s[j] != okeys[0]:
 				if s[j] < nowStr:
 					numsDic[nowStr] -= 1
+					if numsDic[nowStr] == 1:
+						okeys,okeysdic = addokeys(okeys, okeysdic, s[i+1:].index(nowStr), nowStr)
 					break
 				j += 1
 			else:
@@ -63,6 +76,8 @@ def removeDupLettersv2(s):
 				del keys[pot]
 		else:
 			numsDic[nowStr] -= 1
+			if numsDic[nowStr] == 1:
+				okeys,okeysdic = addokeys(okeys, okeysdic, s[i+1:].index(nowStr), nowStr)
 				
 
 	return result
@@ -170,7 +185,14 @@ def removeDuplicateLetters(s):
 			del keys[0]
 	return result
 
-
+#thesqtitxyetpxloeevdeqifkz	hesitxyplovdqfkz
+#bcabc    	abc
+#cbacdcbc 	acdb
+#ccacbaba 	acb
+#bccab 		bca
+#cbbbcaa 	bca
+#ccacbaba 	acb
+#cbcab 		bca
 if __name__ == '__main__':
 
 	if len(sys.argv)  > 1:
