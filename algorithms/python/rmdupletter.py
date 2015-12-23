@@ -8,11 +8,11 @@ def rmNeiDupL(s):
 	strlist = list(s)
 	i = 0
 	while i < length:
-		if i+1 != length and s[i]==s[i+1]:
+		if i+1 != length and strlist[i]==strlist[i+1]:
 			del strlist[i]
 			length -= 1
-			
-		i += 1
+		else:
+			i += 1
 	s = ''.join(strlist)
 	#print s
 	return s
@@ -65,7 +65,7 @@ def removeDupLettersv2(s):
 		elif nowStr == keys[0]:
 			result += nowStr
 			del keys[0]
-			
+
 		elif len(okeys)>0:
 			j = i + 1
 			tempDic = {}
@@ -213,6 +213,9 @@ def removeDuplicateLetters(s):
 #cbcab 		bca
 #mitnlruhznjfyzmtmfnstsxwktxlboxutbic	ilrhjfyzmnstwkboxuc
 #rusrbofeggbbkyuyjsrzornpdguwzizqszpbicdquakqws		bfegkuyjorndiqszpcaw
+#bxshkpdwcsjdbikywvioxrypfzfbppydfilfxxtouzzjxaymjpmdoevv	bhcsdikworfltuzjxaympev
+#eywdgenmcnzhztolafcfnirfpuxmfcenlppegrcalgxjlajxmphwidqqtrqnmmbssotoywfrtylm	chzafipuegjlxdqnbsotwrym
+#lllllllllllmmmmmmmmmmmnnnnnnnnnnnooooooooooopppppppppppqqqqqqqqqqqrrrrrrrrrrrssssssssssstttttttttttuuuuuuuuuuuvvvvvvvvvvvwwwwwwwwwaaaaaaaaaaabbbbbbbbbbbcccccccccccdddddddddddeeeeeeeeeeefffffffffffggggggggggghhhhhhhhhhhiiiiiiiiiiijjjjjjjjjjjkkkkkkkkkkklllllllll		lmnopqrstuvwabcdefghijk
 if __name__ == '__main__':
 
 	if len(sys.argv)  > 1:
@@ -229,6 +232,9 @@ if __name__ == '__main__':
 		numslist.append('cbcab')
 		numslist.append('mitnlruhznjfyzmtmfnstsxwktxlboxutbic')
 		numslist.append("rusrbofeggbbkyuyjsrzornpdguwzizqszpbicdquakqws")
+		numslist.append('bxshkpdwcsjdbikywvioxrypfzfbppydfilfxxtouzzjxaymjpmdoevv')
+		numslist.append('eywdgenmcnzhztolafcfnirfpuxmfcenlppegrcalgxjlajxmphwidqqtrqnmmbssotoywfrtylm')
+		numslist.append('lllllllllllmmmmmmmmmmmnnnnnnnnnnnooooooooooopppppppppppqqqqqqqqqqqrrrrrrrrrrrssssssssssstttttttttttuuuuuuuuuuuvvvvvvvvvvvwwwwwwwwwaaaaaaaaaaabbbbbbbbbbbcccccccccccdddddddddddeeeeeeeeeeefffffffffffggggggggggghhhhhhhhhhhiiiiiiiiiiijjjjjjjjjjjkkkkkkkkkkklllllllll')
 
 		for i in numslist:
 			print i, removeDupLettersv2(i)
