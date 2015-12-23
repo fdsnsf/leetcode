@@ -65,10 +65,10 @@ def removeDupLettersv2(s):
 		elif len(okeys)>0 and nowStr<okeys[0]:
 			j = i + 1
 			while s[j] != okeys[0]:
-				if s[j] < nowStr:
+				if s[j] in keys and s[j] < nowStr:
 					numsDic[nowStr] -= 1
 					if numsDic[nowStr] == 1:
-						okeys,okeysdic = addokeys(okeys, okeysdic, s[i+1:].index(nowStr), nowStr)
+						okeys,okeysdic = addokeys(okeys, okeysdic, i+1+s[i+1:].index(nowStr), nowStr)
 					break
 				j += 1
 			else:
@@ -77,7 +77,7 @@ def removeDupLettersv2(s):
 		else:
 			numsDic[nowStr] -= 1
 			if numsDic[nowStr] == 1:
-				okeys,okeysdic = addokeys(okeys, okeysdic, s[i+1:].index(nowStr), nowStr)
+				okeys,okeysdic = addokeys(okeys, okeysdic, i+1+s[i+1:].index(nowStr), nowStr)
 				
 
 	return result
@@ -193,6 +193,7 @@ def removeDuplicateLetters(s):
 #cbbbcaa 	bca
 #ccacbaba 	acb
 #cbcab 		bca
+#mitnlruhznjfyzmtmfnstsxwktxlboxutbic	ilrhjfyzmnstwkboxuc
 if __name__ == '__main__':
 
 	if len(sys.argv)  > 1:
@@ -207,6 +208,7 @@ if __name__ == '__main__':
 		numslist.append("cbbbcaa")
 		numslist.append("ccacbaba")
 		numslist.append('cbcab')
+		numslist.append('mitnlruhznjfyzmtmfnstsxwktxlboxutbic')
 
 		for i in numslist:
 			print i, removeDupLettersv2(i)
