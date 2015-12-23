@@ -23,6 +23,9 @@ def addokeys(okeys, okeysdic, pot, nowStr):
 			okeys.insert(i, nowStr)
 			okeysdic[nowStr] = pot
 			break
+	else:
+		okeys.append(nowStr)
+		okeysdic[nowStr] = pot
 	return okeys,okeysdic
 
 
@@ -62,18 +65,33 @@ def removeDupLettersv2(s):
 		elif nowStr == keys[0]:
 			result += nowStr
 			del keys[0]
-		elif len(okeys)>0 and nowStr<okeys[0]:
+			
+		elif len(okeys)>0:
 			j = i + 1
+			tempDic = {}
 			while s[j] != okeys[0]:
+				if s[j] in tempDic:
+					tempDic[s[j]] += 1
+				else:
+					tempDic[s[j]] = 1
 				if s[j] in keys and s[j] < nowStr:
 					numsDic[nowStr] -= 1
 					if numsDic[nowStr] == 1:
 						okeys,okeysdic = addokeys(okeys, okeysdic, i+1+s[i+1:].index(nowStr), nowStr)
+					break				 
+				if s[j] in keys and tempDic[s[j]] == numsDic[s[j]] and nowStr < s[j]:
+					result += nowStr
+					del keys[pot]
 					break
 				j += 1
 			else:
-				result += nowStr
-				del keys[pot]
+				if nowStr>okeys[0]:
+					numsDic[nowStr] -= 1
+					if numsDic[nowStr] == 1:
+						okeys,okeysdic = addokeys(okeys, okeysdic, i+1+s[i+1:].index(nowStr), nowStr)
+				else:
+					result += nowStr
+					del keys[pot]
 		else:
 			numsDic[nowStr] -= 1
 			if numsDic[nowStr] == 1:
@@ -194,6 +212,7 @@ def removeDuplicateLetters(s):
 #ccacbaba 	acb
 #cbcab 		bca
 #mitnlruhznjfyzmtmfnstsxwktxlboxutbic	ilrhjfyzmnstwkboxuc
+#rusrbofeggbbkyuyjsrzornpdguwzizqszpbicdquakqws		bfegkuyjorndiqszpcaw
 if __name__ == '__main__':
 
 	if len(sys.argv)  > 1:
@@ -209,6 +228,7 @@ if __name__ == '__main__':
 		numslist.append("ccacbaba")
 		numslist.append('cbcab')
 		numslist.append('mitnlruhznjfyzmtmfnstsxwktxlboxutbic')
+		numslist.append("rusrbofeggbbkyuyjsrzornpdguwzizqszpbicdquakqws")
 
 		for i in numslist:
 			print i, removeDupLettersv2(i)
