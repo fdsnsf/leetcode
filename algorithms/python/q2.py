@@ -1,18 +1,10 @@
 class Solution:
 
-
-
     # @param version1, a string
-
-
 
     # @param version2, a string
 
-
-
     # @return an integer
-
-
 
     def compareVersion(self, version1, version2):
         i,j = version1.split('.'),version2.split('.')
